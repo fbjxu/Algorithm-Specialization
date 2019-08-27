@@ -74,12 +74,5 @@ def ClosestPair(Points):
     else:
         return splitClosest
 
-
-    
-
-
-
-
-    
     return sortedPoints
 
