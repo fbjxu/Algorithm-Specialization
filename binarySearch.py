@@ -58,3 +58,4 @@ def binarySearch(nums, val):
 
 
 print(binarySearch(nums, val))
+
