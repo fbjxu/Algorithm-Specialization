@@ -40,11 +40,6 @@ def ClosestSplit(sortedPointsX, sortedPointsY, delta):
                 shortest = curDis
     return shortest
 
-"""
-some note on why the base case include cases where the length of the input list is 3:
-
-"""
-
 def ClosestPair(Points):
     """
     takes into a collection of points. In other words, an array of points.
@@ -55,7 +50,7 @@ def ClosestPair(Points):
 
     if len(Points) == 1:
         print('condition points == 1 is hit')
-        return math.inf
+        return math.inf #use math.inf to denote a very large number
 
     if len(Points) == 2:
         return Points[0].get_dist(Points[1])
