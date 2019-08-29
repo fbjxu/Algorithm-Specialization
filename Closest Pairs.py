@@ -40,37 +40,35 @@ def ClosestSplit(sortedPointsX, sortedPointsY, delta):
                 shortest = curDis
     return shortest
 
-def ClosestPair(Points):
+def ClosestPair(Px, Py): 
     """
-    takes into a collection of points. In other words, an array of points.
-    return the pair of points that has the shortest Euclidean Distance
+    takes into sorted points, Px is points sorted by x and Py is points sorted by y
+    return the distance of the pair of points that has the shortest Euclidean Distance
 
     Assumption: there are no overlapping points
     """
 
-    if len(Points) == 1:
-        print('condition points == 1 is hit')
+    if len(Px) == 1:
         return math.inf #use math.inf to denote a very large number
 
-    if len(Points) == 2:
-        return Points[0].get_dist(Points[1])
+    if len(Px) == 2:
+        return Px[0].get_dist(Px[1])
     
-    # if len(Points) == 3:
-    #     return min(Points[0].get_dist(Points[1]), Points[0].get_dist(Points[2]),Points[1].get_dist(Points[2]))
-
     #divide
-    #python uses quick sort for the function sorted: the complexity is O(nlogn)
-    sortedPointsX = sorted(Points, key = (lambda x: Point.getX(x))) 
-    sortedPointsY = sorted(Points, key = (lambda x: Point.getY(x)))
-    midPoint = len(sortedPointsX) // 2
+    midPoint = len(Px) // 2
     #split sorted points into two halves: left and right and obtain the shortest distance pair for each half
-    leftClosest = ClosestPair(sortedPointsX[:midPoint])
-    rightClosest = ClosestPair(sortedPointsX[midPoint:])
+    leftClosest = ClosestPair(Px[:midPoint], Py)
+    rightClosest = ClosestPair(Px[midPoint:], Py)
     delta = min(leftClosest, rightClosest)
     #conquer
-    splitClosest = ClosestSplit(sortedPointsX, sortedPointsY, delta)
+    splitClosest = ClosestSplit(Px, Py, delta)
     return min(splitClosest, delta)
 
+def finalClosestPair(Points):
+     #python uses quick sort for the function sorted: the complexity is O(nlogn)
+    sortedPointsX = sorted(Points, key = (lambda x: Point.getX(x))) 
+    sortedPointsY = sorted(Points, key = (lambda x: Point.getY(x)))
+    return ClosestPair(sortedPointsX, sortedPointsY)
 
 pointA = Point(2,3)
 pointB = Point(12,30)
@@ -82,17 +80,14 @@ pointF = Point(3,4)
 
 array = [pointA, pointB, pointC, pointD, pointE, pointF]
 
-arrayX = sorted(array, key = (lambda x: Point.getX(x)))
-arrayY = sorted(array, key = (lambda x: Point.getY(x)))
+finalClosestPair(array) #([(2, 3), (3, 4)], 1.4142135623730951)
 
-ClosestPair(array)
-
-arrayTwoData = [(12, 30), (40, 50), (5, 1), (12, 10), (-5, -1)]
+arrayTwoData = [(12, 30), (40, 50), (5, 1), (12, 10), (-5, -1)] 
 arrayTwo = []
 for e in arrayTwoData:
     arrayTwo.append(Point(e[0], e[1]))
 
-ClosestPair(arrayTwo)
+finalClosestPair(arrayTwo) #([(-5, -1), (5, 1)], 10.198039027185569)
 
 
 arrayThreeData = [(0, 0), (-2, 0), (4, 0), (1, 1), (3, 3), (-2,2), (5,2)]
@@ -100,4 +95,4 @@ arrayThree = []
 for e in arrayThreeData:
     arrayThree.append(Point(e[0], e[1]))
 
-ClosestPair(arrayThree) #1.41421 (0,0) and (1,1)
+finalClosestPair(arrayThree) #1.41421 (0,0) and (1,1)
